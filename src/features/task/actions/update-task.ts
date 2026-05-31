@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { updateTag } from "next/cache";
 
 import { TaskResponseSchema, UpdateTaskRequestSchema } from "#/features/task/schemas/task";
-import { DBClient } from "#/lib/drizzle/client";
+import { getDb } from "#/lib/drizzle/client";
 import { taskItems } from "#/lib/drizzle/schema";
 
 export const updateTask = async (id: number, data: { title?: string; isCompleted?: boolean }) => {
@@ -23,7 +23,9 @@ export const updateTask = async (id: number, data: { title?: string; isCompleted
       updateData.isCompleted = body.isCompleted;
     }
 
-    const updatedTasks = await DBClient.update(taskItems)
+    const db = getDb();
+    const updatedTasks = await db
+      .update(taskItems)
       .set(updateData)
       .where(eq(taskItems.id, id))
       .returning();

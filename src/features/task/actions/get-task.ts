@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 
 import { GetTaskByIdSchema, TaskResponseSchema } from "#/features/task/schemas/task";
-import { DBClient } from "#/lib/drizzle/client";
+import { getDbAsync } from "#/lib/drizzle/client";
 import { taskItems } from "#/lib/drizzle/schema";
 
 export const getTaskById = async (id: number) => {
@@ -20,7 +20,8 @@ export const getTaskById = async (id: number) => {
   try {
     const { id: validId } = GetTaskByIdSchema.parse({ id });
 
-    const tasks = await DBClient.select().from(taskItems).where(eq(taskItems.id, validId)).limit(1);
+    const db = await getDbAsync();
+    const tasks = await db.select().from(taskItems).where(eq(taskItems.id, validId)).limit(1);
     const task = tasks.at(0);
 
     if (!task) {

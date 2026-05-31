@@ -5,8 +5,11 @@
     ".next/",
     "out/",
     "build/",
+    "styled-system/",
+    "cloudflare-env.d.ts",
     "utils/fetch/api.d.ts",
-    "utils/fetch/bundle.gen.yml"
+    "utils/fetch/bundle.gen.yml",
+    "src/components/ui/**"
   ],
   "sortImports": {
     "groups": [
@@ -33,6 +36,6 @@
   "sortPackageJson": {
     "sortScripts": true
   },
-  "sortTailwindcss": true,
+  "sortTailwindcss": false,
   "jsdoc": true
 }

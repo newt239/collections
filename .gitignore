@@ -49,3 +49,11 @@ next-env.d.ts
 
 # CSS Modules Kit
 generated
+
+# Panda CSS
+/styled-system
+
+# Cloudflare / OpenNext
+.open-next
+.wrangler
+cloudflare-env.d.ts

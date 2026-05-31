@@ -2,7 +2,7 @@ import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
 
 import { GetTasksQuerySchema, GetTasksResponseSchema } from "#/features/task/schemas/task";
-import { DBClient } from "#/lib/drizzle/client";
+import { getDbAsync } from "#/lib/drizzle/client";
 import { taskItems } from "#/lib/drizzle/schema";
 
 type GetTasksOptions = {
@@ -27,7 +27,9 @@ export const getTasks = async (options?: GetTasksOptions) => {
       offset: options?.offset,
     });
 
-    const tasks = await DBClient.select()
+    const db = await getDbAsync();
+    const tasks = await db
+      .select()
       .from(taskItems)
       .orderBy(taskItems.createdAt)
       .limit(query.limit ?? 100)

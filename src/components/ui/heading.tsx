@@ -1,23 +1,33 @@
-import { twMerge } from "tailwind-merge";
+import type { ComponentPropsWithoutRef } from "react";
 
-type HeadingType = { level?: 1 | 2 | 3 | 4 } & React.ComponentPropsWithoutRef<
-  "h1" | "h2" | "h3" | "h4"
->;
+import { css, cx } from "styled-system/css";
+
+type Level = 1 | 2 | 3 | 4;
 
 type HeadingProps = {
+  level?: Level;
   className?: string | undefined;
-} & HeadingType;
+} & ComponentPropsWithoutRef<"h1" | "h2" | "h3" | "h4">;
+
+const textStyleByLevel: Record<Level, "2xl" | "xl" | "lg" | "md"> = {
+  1: "2xl",
+  2: "xl",
+  3: "lg",
+  4: "md",
+};
 
 const Heading = ({ className, level = 1, ...props }: HeadingProps) => {
-  const Element: `h${typeof level}` = `h${level}`;
+  const Element: `h${Level}` = `h${level}`;
+
   return (
     <Element
-      className={twMerge(
-        "font-sans font-semibold text-fg tracking-tight",
-        level === 1 && "text-xl/8 sm:text-2xl/8",
-        level === 2 && "text-lg/6 sm:text-xl/8",
-        level === 3 && "text-base/6 sm:text-lg/6",
-        level === 4 && "text-base/6",
+      className={cx(
+        css({
+          color: "fg.default",
+          fontWeight: "semibold",
+          letterSpacing: "tight",
+          textStyle: textStyleByLevel[level],
+        }),
         className,
       )}
       {...props}

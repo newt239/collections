@@ -2,6 +2,8 @@
 
 import { useState, useTransition } from "react";
 
+import { css } from "styled-system/css";
+
 import { Button } from "#/components/ui/button";
 import { Label } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
@@ -36,8 +38,15 @@ export const TaskForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-        <TextField className="min-w-0 flex-1">
+      <div
+        className={css({
+          display: "flex",
+          flexDirection: "column",
+          gap: "4",
+          sm: { alignItems: "flex-end", flexDirection: "row" },
+        })}
+      >
+        <TextField className={css({ flex: "1", minWidth: "0" })}>
           <Label>新しいタスク</Label>
           <Input
             type="text"
@@ -49,7 +58,11 @@ export const TaskForm = () => {
             disabled={isPending}
           />
         </TextField>
-        <Button type="submit" isDisabled={isPending || !title.trim()} className="shrink-0">
+        <Button
+          type="submit"
+          disabled={isPending || !title.trim()}
+          className={css({ flexShrink: "0" })}
+        >
           {isPending ? "追加中..." : "追加"}
         </Button>
       </div>

@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 
+import { ThemeProvider } from "#/components/providers/theme-provider";
+
 export const metadata: Metadata = {
   description: "Next.js Template",
   title: "Next.js Template",
@@ -11,8 +13,10 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => (
-  <html lang="ja">
-    <body>{children}</body>
+  <html lang="ja" suppressHydrationWarning>
+    <body>
+      <ThemeProvider>{children}</ThemeProvider>
+    </body>
   </html>
 );
 

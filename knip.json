@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/knip/schema.json",
   "entry": [
+    "open-next.config.ts",
     "src/components/ui/**/*.{ts,tsx}!",
     "src/components/providers/**/*.{ts,tsx}!",
     "src/lib/better-auth/**/*.{ts,tsx}!",

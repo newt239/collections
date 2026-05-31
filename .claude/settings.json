@@ -10,7 +10,6 @@
     "deny": [
       "Bash(rm:*)",
       "Bash(git reset:*)",
-      "Bash(git checkout:*)",
       "Bash(git merge:*)",
       "Bash(git rebase:*)",
       "Bash(git reset:*)"

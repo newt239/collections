@@ -1,10 +1,10 @@
 import { headers } from "next/headers";
 
-import { auth } from "./auth";
+import { getAuth } from "./auth";
 
 export const getSession = async () => {
   try {
-    return await auth.api.getSession({
+    return await getAuth().api.getSession({
       headers: await headers(),
     });
   } catch (error) {

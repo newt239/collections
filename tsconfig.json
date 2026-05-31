@@ -8,7 +8,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "#/*": ["./src/*"]
+      "#/*": ["./src/*"],
+      "styled-system/*": ["./styled-system/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
@@ -25,8 +26,11 @@
   },
   "include": [
     "next-env.d.ts",
+    "cloudflare-env.d.ts",
     "src/**/*",
+    "styled-system/**/*",
     "next.config.ts",
+    "open-next.config.ts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],

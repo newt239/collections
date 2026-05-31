@@ -3,14 +3,16 @@
 import { updateTag } from "next/cache";
 
 import { CreateTaskRequestSchema, TaskResponseSchema } from "#/features/task/schemas/task";
-import { DBClient } from "#/lib/drizzle/client";
+import { getDb } from "#/lib/drizzle/client";
 import { taskItems } from "#/lib/drizzle/schema";
 
 export const createTask = async (data: { title: string }) => {
   try {
     const body = CreateTaskRequestSchema.parse(data);
 
-    const [task] = await DBClient.insert(taskItems)
+    const db = getDb();
+    const [task] = await db
+      .insert(taskItems)
       .values({
         isCompleted: false,
         title: body.title,

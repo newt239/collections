@@ -1,24 +1,15 @@
 {
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
-  "rsc": true,
-  "tsx": true,
-  "tailwind": {
-    "config": "",
-    "css": "src/app/globals.css",
-    "baseColor": "neutral",
-    "cssVariables": true,
-    "prefix": ""
+  "$schema": "https://park-ui.com/schema/components.json",
+  "framework": "react",
+  "panda": {
+    "config": "panda.config.ts"
   },
-  "iconLibrary": "lucide",
   "aliases": {
     "components": "#/components",
-    "utils": "#/lib/utils",
-    "ui": "#/components/ui",
+    "hooks": "#/hooks",
     "lib": "#/lib",
-    "hooks": "#/hooks"
-  },
-  "registries": {
-    "@intentui": "https://intentui.com/r/{name}"
+    "recipes": "#/components/ui/recipes",
+    "theme": "#/components/ui",
+    "ui": "#/components/ui"
   }
 }

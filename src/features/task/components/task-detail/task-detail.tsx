@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { css } from "styled-system/css";
 
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { Heading } from "#/components/ui/heading";
@@ -26,20 +27,41 @@ export const TaskDetail = async ({ params }: Readonly<TaskDetailProps>) => {
   }
 
   return (
-    <main className="bg-bg min-h-screen px-4 py-12 sm:px-6 sm:py-16">
-      <div className="mx-auto max-w-2xl">
-        <Card className="border-line-strong">
-          <CardHeader className="border-line-subtle border-b pb-4">
-            <Heading level={1} className="text-center tracking-tight">
+    <main
+      className={css({
+        bg: "bg.canvas",
+        minHeight: "100vh",
+        px: { base: "4", sm: "6" },
+        py: { base: "12", sm: "16" },
+      })}
+    >
+      <div className={css({ maxW: "2xl", mx: "auto" })}>
+        <Card className={css({ borderColor: "border.default" })}>
+          <CardHeader
+            className={css({ borderBottomWidth: "1px", borderColor: "border.subtle", pb: "4" })}
+          >
+            <Heading level={1} className={css({ textAlign: "center" })}>
               タスク詳細
             </Heading>
           </CardHeader>
-          <CardContent className="space-y-4 pt-6">
-            <CardTitle className={task.isCompleted ? "text-muted-fg line-through" : undefined}>
+          <CardContent
+            className={css({ display: "flex", flexDirection: "column", gap: "4", pt: "6" })}
+          >
+            <CardTitle
+              className={
+                task.isCompleted
+                  ? css({ color: "fg.muted", textDecoration: "line-through" })
+                  : undefined
+              }
+            >
               {task.title}
             </CardTitle>
-            <Text className="text-sm">作成日時: {task.createdAt.toLocaleString("ja-JP")}</Text>
-            <Text className="text-sm">ステータス: {task.isCompleted ? "完了" : "未完了"}</Text>
+            <Text className={css({ fontSize: "sm" })}>
+              作成日時: {task.createdAt.toLocaleString("ja-JP")}
+            </Text>
+            <Text className={css({ fontSize: "sm" })}>
+              ステータス: {task.isCompleted ? "完了" : "未完了"}
+            </Text>
           </CardContent>
         </Card>
       </div>

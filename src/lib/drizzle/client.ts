@@ -1,24 +1,21 @@
-import { createClient } from "@libsql/client";
-import { drizzle } from "drizzle-orm/libsql";
+import "server-only";
+import { cache } from "react";
+
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { drizzle } from "drizzle-orm/d1";
 
 import * as schema from "./schema/index";
 
-const tursoUrl = process.env.TURSO_CONNECTION_URL!;
-const tursoToken = process.env.TURSO_AUTH_TOKEN!;
-
-if (!tursoUrl) {
-  throw new Error("TURSO_CONNECTION_URL environment variable is required");
-}
-
-if (!tursoToken) {
-  throw new Error("TURSO_AUTH_TOKEN environment variable is required");
-}
-
-const sqlClient = createClient({
-  authToken: tursoToken,
-  url: tursoUrl,
+// 動的レンダリング（Server Actions など）から D1 バインディングを取得する
+export const getDb = cache(() => {
+  const { env } = getCloudflareContext();
+  return drizzle(env.DB, { schema });
 });
 
-export const DBClient = drizzle(sqlClient, { schema });
+// "use cache" や静的レンダリング（ISR/SSG）から D1 バインディングを取得する
+export const getDbAsync = cache(async () => {
+  const { env } = await getCloudflareContext({ async: true });
+  return drizzle(env.DB, { schema });
+});
 
 export * from "./schema";

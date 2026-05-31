@@ -28,17 +28,29 @@
 - `pnpm run start` - 本番サーバーを開始
 - `pnpm run typecheck` - TypeScript で型チェック
 
+### データベース / Cloudflare コマンド
+
+- `pnpm run db:generate` - スキーマ変更から SQL マイグレーションを生成（drizzle-kit）
+- `pnpm run db:migrate:local` - ローカル D1 にマイグレーションを適用（`wrangler --local`）
+- `pnpm run cf-typegen` - `wrangler.jsonc` から Cloudflare 環境型（`cloudflare-env.d.ts`）を生成
+- `pnpm run preview` - OpenNext でビルドしローカルプレビュー
+- `pnpm run deploy` - OpenNext でビルドし Cloudflare へデプロイ
+
+> `styled-system/`（Panda CSS）と `cloudflare-env.d.ts` は生成物です。`pnpm install` 時の `prepare` で自動生成され、git 管理対象外です。
+
 ## アーキテクチャ
 
 ### 技術スタック
 
 - **言語**: TypeScript
 - **フレームワーク**: Next.js 16 with App Router
-- **スタイリング**: Tailwind CSS v4
+- **スタイリング**: Panda CSS + Park UI（Ark UI ベース）
+- **アイコン**: Lucide React
+- **テーマ**: next-themes（class 方式ダークモード）
 - **コード品質**: Oxlint
 - **Git hooks**: Lefthook
-- **デプロイ**: Vercel
-- **データベース**: Turso DB (SQLite)
+- **デプロイ**: Cloudflare Workers（OpenNext / `@opennextjs/cloudflare`）
+- **データベース**: Cloudflare D1 (SQLite)
 - **ORM**: Drizzle
 
 ### プロジェクト構造
@@ -76,8 +88,7 @@ src/
 │       └── index.ts
 ├── lib/                    # グローバルユーティリティ・設定
 │   ├── better-auth/        # 認証設定（認証実装時に使用）
-│   ├── drizzle/            # Drizzle の設定・スキーマ
-│   └── primitive.ts        # 共通プリミティブ
+│   └── drizzle/            # Drizzle の設定・スキーマ（D1 クライアント）
 ├── types/                  # グローバル型定義（必要に応じて追加）
 └── hooks/                  # グローバルカスタムフック（必要に応じて追加）
 ```

@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "collections",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-03-25",
+  // nodejs_compat: Node.js API を有効化 / global_fetch_strictly_public: アプリ内の fetch を許可
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      // "name" と一致させる
+      "service": "collections",
+    },
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "collections-db",
+      // ローカル開発用のプレースホルダ。リモートを使う場合は `wrangler d1 create collections-db` で得た ID に置き換える
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "drizzle",
+    },
+  ],
+}

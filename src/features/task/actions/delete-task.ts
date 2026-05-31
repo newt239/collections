@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { updateTag } from "next/cache";
 
 import { TaskResponseSchema } from "#/features/task/schemas/task";
-import { DBClient } from "#/lib/drizzle/client";
+import { getDb } from "#/lib/drizzle/client";
 import { taskItems } from "#/lib/drizzle/schema";
 
 export const deleteTask = async (id: number) => {
@@ -13,7 +13,8 @@ export const deleteTask = async (id: number) => {
       return { error: "無効なIDです", success: false } as const;
     }
 
-    const deletedTasks = await DBClient.delete(taskItems).where(eq(taskItems.id, id)).returning();
+    const db = getDb();
+    const deletedTasks = await db.delete(taskItems).where(eq(taskItems.id, id)).returning();
     const task = deletedTasks.at(0);
 
     if (!task) {

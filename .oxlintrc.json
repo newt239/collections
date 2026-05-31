@@ -1,6 +1,14 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "ignorePatterns": ["node_modules/", ".next/", "out/", "build/"],
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "out/",
+    "build/",
+    "styled-system/",
+    "cloudflare-env.d.ts",
+    "src/components/ui/**"
+  ],
   "env": {
     "browser": true,
     "node": true

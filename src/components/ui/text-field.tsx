@@ -1,11 +1,17 @@
 "use client";
 
-import { type TextFieldProps, TextField as TextFieldPrimitive } from "react-aria-components";
+import type { ComponentPropsWithoutRef } from "react";
 
-import { cx } from "#/lib/primitive";
+import { Field } from "@ark-ui/react/field";
 
-import { fieldStyles } from "./field";
+import { cx } from "styled-system/css";
+import { field } from "styled-system/recipes";
 
-export const TextField = ({ className, ...props }: TextFieldProps) => (
-  <TextFieldPrimitive data-slot="control" className={cx(fieldStyles(), className)} {...props} />
+const styles = field();
+
+export const TextField = ({
+  className,
+  ...props
+}: ComponentPropsWithoutRef<typeof Field.Root>) => (
+  <Field.Root className={cx(styles.root, className)} {...props} />
 );

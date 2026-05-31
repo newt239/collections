@@ -2,7 +2,9 @@
 
 import { useTransition } from "react";
 
+import { Check, X } from "lucide-react";
 import Link from "next/link";
+import { css } from "styled-system/css";
 
 import { Button } from "#/components/ui/button";
 import { Card, CardContent, CardTitle } from "#/components/ui/card";
@@ -57,39 +59,46 @@ export const TaskItem = ({ task, formattedCreatedAt }: TaskItemProps) => {
   };
 
   return (
-    <Card className={task.isCompleted ? "opacity-70" : undefined}>
-      <CardContent className="flex items-center gap-3 py-4">
+    <Card className={task.isCompleted ? css({ opacity: "0.7" }) : undefined}>
+      <CardContent className={css({ alignItems: "center", display: "flex", gap: "3", py: "4" })}>
         <Button
           type="button"
           intent="outline"
           size="sq-sm"
-          onPress={handleToggle}
-          isDisabled={isPending}
+          onClick={handleToggle}
+          disabled={isPending}
           aria-label={task.isCompleted ? "未完了にマーク" : "完了にマーク"}
-          className="min-h-9 min-w-9 shrink-0"
+          className={css({ flexShrink: "0" })}
         >
-          {task.isCompleted ? "✓" : ""}
+          {task.isCompleted ? <Check size={16} aria-hidden /> : null}
         </Button>
-        <div className="min-w-0 flex-1">
+        <div className={css({ flex: "1", minWidth: "0" })}>
           <CardTitle
-            className={task.isCompleted ? "text-muted-fg font-normal line-through" : undefined}
+            className={
+              task.isCompleted
+                ? css({ color: "fg.muted", fontWeight: "normal", textDecoration: "line-through" })
+                : undefined
+            }
           >
-            <Link href={`/tasks/${task.id}`} className="hover:underline">
+            <Link
+              href={`/tasks/${task.id}`}
+              className={css({ _hover: { textDecoration: "underline" } })}
+            >
               {task.title}
             </Link>
           </CardTitle>
-          <Text className="mt-1 text-sm">{formattedCreatedAt}</Text>
+          <Text className={css({ fontSize: "sm", marginTop: "1" })}>{formattedCreatedAt}</Text>
         </div>
         <Button
           type="button"
           intent="danger"
           size="sq-sm"
-          onPress={handleDelete}
-          isDisabled={isPending}
+          onClick={handleDelete}
+          disabled={isPending}
           aria-label="削除"
-          className="shrink-0"
+          className={css({ flexShrink: "0" })}
         >
-          ×
+          <X size={16} aria-hidden />
         </Button>
       </CardContent>
     </Card>
